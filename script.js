@@ -6,9 +6,9 @@ formulario.addEventListener("submit", (event) => {
     event.preventDefault()
     const emailDigitado = emailInput.value
     const senhaDigitada = senhaInput.value
-    const procuraLocal = localStorage.getItem(emailDigitado)
+    const user = procuraUsuario(emailDigitado, senhaDigitada)
 
-    if (procuraLocal && procuraLocal === senhaDigitada) {
+    if (user) {
         Swal.fire({
             icon: "success",
             title: "Você entrou no sistema",
@@ -24,4 +24,15 @@ formulario.addEventListener("submit", (event) => {
           });
     }
 })
+
+function procuraUsuario (emailDigitado, senhaDigitada) {
+    const usuarios = JSON.parse(localStorage.getItem("usuarios"))
+    const found = usuarios.find((usuario) => {
+        return (
+            usuario.nome == emailDigitado && 
+            usuario.senha == senhaDigitada
+        )
+    })
+    return found
+}
 
