@@ -29,10 +29,9 @@ function procuraUsuario (emailDigitado, senhaDigitada) {
     const usuarios = JSON.parse(localStorage.getItem("usuarios"))
     const found = usuarios.find((usuario) => {
         return (
-            usuario.nome == emailDigitado && 
+            usuario.email == emailDigitado && 
             usuario.senha == senhaDigitada
         )
     })
     return found
 }
-
