@@ -33,7 +33,7 @@
     </div>
 
 
-    <!-- MODAL -->
+    <!-- MODAL CADASTRO -->
     <div class="modal fade" id="modal_cadastro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -55,6 +55,39 @@
                         <div class="mb-3">
                             <label for="senha" class="form-label">Repita a Senha</label>
                             <input required type="password" class="form-control" id="senha-cadastro-2">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CADASTRO -->
+    <div class="modal fade" id="modal_edicao" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="TituloModalCentralizado">Edição</h5>
+                </div>
+                <form id="editar_modal">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input required type="email" class="form-control" id="email-editar"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input required type="password" class="form-control" id="senha-editar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Repita a Senha</label>
+                            <input required type="password" class="form-control" id="senha-editar-2">
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -1,6 +1,11 @@
 const tabela = document.getElementById("tabela_usuarios")
 const usuarios = JSON.parse(localStorage.getItem("usuarios"))
 
+if (!usuarios) {
+    localStorage.setItem("usuarios", JSON.stringify([]))
+    location.reload()
+}
+
 for (let index = 0; index < usuarios.length; index++) {
     const usuario = usuarios[index];
     const linha = `
@@ -9,12 +14,47 @@ for (let index = 0; index < usuarios.length; index++) {
             <td>${usuario.email}</td>
             <td>${usuario.senha}</td>
             <td class="text-center">
-                <div class="btn btn-warning">Editar</div>
-                <div class="btn btn-danger">Apagar</div>
+                <div class="btn btn-warning" onClick="editarUsuario(${usuario.id})">Editar</div>
+                <div class="btn btn-danger" onClick="apagarUsuario(${usuario.id})">Apagar</div>
             </td>
         </tr>
     `
     tabela.innerHTML += linha
+}
+
+function editarUsuario(id) {
+    const usuario = procuraUsuarioById(id)
+    // abrir modal do id modal_cadastro
+    var modal = new bootstrap.Modal(document.getElementById('modal_edicao'));
+    const emaileditar = document.getElementById("email-editar")
+    const senhaeditar = document.getElementById("senha-editar")
+    const senha2editar = document.getElementById("senha-editar-2")
+
+    emaileditar.value = usuario.email
+    senhaeditar.value = usuario.senha
+    senha2editar.value = usuario.senha
+
+    modal.show(); // 
+}
+
+function apagarUsuario(id) {
+    Swal.fire({
+        title: "Tem certeza?",
+        text: "Você não poderá desfazer está ação",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, apagar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const usuarioAremover = usuarios.findIndex(usuario => usuario.id == id)
+            usuarios.splice(usuarioAremover, 1)
+            localStorage.setItem('usuarios', JSON.stringify(usuarios))
+            location.reload()
+        }
+      });
 }
 
 const formulario_cadastro = document.getElementById("cadastro")
@@ -52,6 +92,7 @@ formulario_cadastro.addEventListener("submit", (event) => {
     
     usuarios.push(usuarioAdd)
     localStorage.setItem('usuarios', JSON.stringify(usuarios))
+    location.reload()
 })
 
 function procuraUsuarioByEmail (emailDigitado) {
@@ -62,3 +103,10 @@ function procuraUsuarioByEmail (emailDigitado) {
     return found
 }
 
+function procuraUsuarioById(id) {
+    const usuarios = JSON.parse(localStorage.getItem("usuarios"))
+    const found = usuarios.find((usuario) => {
+        return usuario.id == id 
+    })
+    return found
+}
