@@ -1,11 +1,11 @@
 const tabela = document.getElementById("tabela_produtos");
 const produtos = JSON.parse(localStorage.getItem("produtos"));
-
+//verifca se array de produtos existe no localstore
 if (!produtos) {
 	localStorage.setItem("produtos", JSON.stringify([]));
 	location.reload();
 }
-
+//preenche as tabela com dados
 for (let index = 0; index < produtos.length; index++) {
 	const produto = produtos[index];
 	const linha = `
@@ -22,22 +22,27 @@ for (let index = 0; index < produtos.length; index++) {
     `;
 	tabela.innerHTML += linha;
 }
-
+//funcao para editar o produto no modal
 function editarProduto(id) {
+	// Procura o produto pelo ID
 	const produto = procuraProdutoById(id);
-	// abrir modal do id modal_cadastro
+	// Abre o modal de edição
 	var modal = new bootstrap.Modal(document.getElementById("modal_edicao"));
-	const produtoeditar = document.getElementById("produto-editar");
-	const quantidadeeditar = document.getElementById("quantidade-editar");
-	const descricaoeditar = document.getElementById("descricao-editar");
+	const produtoId = document.getElementById("id-produto-editar");
+	const nome = document.getElementById("produto-editar");
+	const quantidade = document.getElementById("quantidade-editar");
+	const descricao = document.getElementById("descricao-editar");
 
-	produtoeditar.value = produto.produto;
-	quantidadeeditar.value = produto.quantidade;
-	descricaoeditar.value = produto.descricao;
+	// Preenche os campos do modal com os dados do produto
+	nome.value = produto.produto;
+	quantidade.value = produto.quantidade;
+	descricao.value = produto.descricao;
+	produtoId.value = id;
 
-	modal.show(); //
+	// Exibe o modal
+	modal.show();
 }
-
+//funcao paga apagar
 function apagarProduto(id) {
 	Swal.fire({
 		title: "Tem certeza?",
@@ -59,9 +64,9 @@ function apagarProduto(id) {
 		}
 	});
 }
-
+//pega o formulario no html
 const formulario_cadastro = document.getElementById("cadastro");
-
+//add evento para ser executado quando o formulario foi enviado,salva dados no modal
 formulario_cadastro.addEventListener("submit", (event) => {
 	event.preventDefault();
 	const quantidadeDigitada = document.getElementById(
@@ -84,7 +89,26 @@ formulario_cadastro.addEventListener("submit", (event) => {
 	localStorage.setItem("produtos", JSON.stringify(produtos));
 	location.reload();
 });
+//salva os dados editar
+const formularioEditar = document.getElementById("editar_modal");
+formularioEditar.addEventListener("submit", (event) => {
+	event.preventDefault();
+	const produtoId = document.getElementById("id-produto-editar").value;
+	const produto = document.getElementById("produto-editar").value;
+	const quantidade = document.getElementById("quantidade-editar").value;
+	const descricao = document.getElementById("descricao-editar").value;
 
+	let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+	produtos = produtos.map((produtoItem) =>
+		produtoItem.id == produtoId
+			? { ...produtoItem, produto, quantidade, descricao }
+			: produtoItem
+	);
+	localStorage.setItem("produtos", JSON.stringify(produtos));
+	location.reload();
+});
+//procura um produto baseado no id
 function procuraProdutoById(id) {
 	const produtos = JSON.parse(localStorage.getItem("produtos"));
 	const found = produtos.find((produto) => {
