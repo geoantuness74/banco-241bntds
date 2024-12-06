@@ -99,7 +99,7 @@
 							<button
 								type="button"
 								class="btn btn-secondary"
-								data-dismiss="modal"
+								data-bs-dismiss="modal"
 							>
 								Fechar
 							</button>
@@ -129,6 +129,7 @@
 						</h5>
 					</div>
 					<form id="editar_modal">
+						<input type="hidden" id="id-produto-editar" />
 						<div class="modal-body">
 							<div class="mb-3">
 								<label for="produto-editar" class="form-label"
@@ -150,9 +151,20 @@
 								>
 								<input
 									required
-									type="quantidade"
+									type="text"
 									class="form-control"
 									id="quantidade-editar"
+								/>
+							</div>
+							<div class="mb-3">
+								<label for="descricao-editar" class="form-label"
+									>Descrição</label
+								>
+								<input
+									required
+									type="text"
+									class="form-control"
+									id="descricao-editar"
 								/>
 							</div>
 						</div>
@@ -160,12 +172,12 @@
 							<button
 								type="button"
 								class="btn btn-secondary"
-								data-dismiss="modal"
+								data-bs-dismiss="modal"
 							>
 								Fechar
 							</button>
 							<button type="submit" class="btn btn-primary">
-								Cadastrar
+								Editar
 							</button>
 						</div>
 					</form>
